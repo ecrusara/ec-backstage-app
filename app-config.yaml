@@ -3,7 +3,7 @@ app:
   baseUrl: http://localhost:3000
 
 organization:
-  name: My Company
+  name: Ecrusara's Company
 
 backend:
   # Used for enabling authentication, secret is shared by all backend plugins
@@ -40,7 +40,8 @@ integrations:
     - host: github.com
       # This is a Personal Access Token or PAT from GitHub. You can find out how to generate this token, and more information
       # about setting up the GitHub integration here: https://backstage.io/docs/getting-started/configuration#setting-up-a-github-integration
-      token: ${GITHUB_TOKEN}
+      #token: ${GITHUB_TOKEN}
+      token: ${BACKSTAGE_APP_GITHUB_TOKEN}
     ### Example for how to add your GitHub Enterprise instance using the API:
     # - host: ghe.example.net
     #   apiBaseUrl: https://ghe.example.net/api/v3
@@ -64,7 +65,13 @@ techdocs:
 
 auth:
   # see https://backstage.io/docs/auth/ to learn about auth providers
-  providers: {}
+  #providers: {}
+  environment: development
+  providers:
+    github:
+      development:
+        clientId: ${AUTH_GITHUB_CLIENT_ID}
+        clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
 
 scaffolder:
   # see https://backstage.io/docs/features/software-templates/configuration for software template options
@@ -85,16 +92,28 @@ catalog:
       target: ../../examples/template/template.yaml
       rules:
         - allow: [Template]
-
+    - type: file
+      target: ../../examples/templateapi/template.yaml
+      rules:
+        - allow: [Template]
+    - type: file
+      target: ../../examples/templatedoc/template.yaml
+      rules:
+        - allow: [Template]
     # Local example organizational data
     - type: file
       target: ../../examples/org.yaml
       rules:
         - allow: [User, Group]
-
+    
+    - type: url
+      target: https://github.com/ecrusara/ec-backstage-app-templates/blob/main/templates/springbootapi/template.yaml
+      rules:
+        - allow: [Template]
+    
     ## Uncomment these lines to add more example data
-    # - type: url
-    #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all.yaml
+    - type: url
+      target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all.yaml
 
     ## Uncomment these lines to add an example org
     # - type: url
