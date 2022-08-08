@@ -17,7 +17,6 @@ export default async function createPlugin(
     tokenManager: env.tokenManager,
     providerFactories: {
       ...defaultAuthProviderFactories,
-
       // This replaces the default GitHub auth provider with a customized one.
       // The `signIn` option enables sign-in for this provider, using the
       // identity resolution logic that's provided in the `resolver` callback.
@@ -47,6 +46,12 @@ export default async function createPlugin(
             });
           },
           // resolver: providers.github.resolvers.usernameMatchingUserEntityName(),
+        },
+      }),
+      bitbucket: providers.bitbucket.create({
+        signIn: {
+          resolver:
+            providers.bitbucket.resolvers.usernameMatchingUserEntityAnnotation(),
         },
       }),
     },

@@ -36,6 +36,8 @@ import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/
 
 //include imports to github auth
 import { githubAuthApiRef } from '@backstage/core-plugin-api';
+import { atlassianAuthApiRef } from '@backstage/core-plugin-api';
+import { bitbucketAuthApiRef } from '@backstage/core-plugin-api';
 import { SignInPage } from '@backstage/core-components';
 
 const app = createApp({
@@ -44,12 +46,25 @@ const app = createApp({
     SignInPage: props => (
       <SignInPage
         {...props}
-        providers={[{
+        providers={['guest',{
           id: 'github-auth-provider',
           title: 'GitHub',
           message: 'Sign in using GitHub',
           apiRef: githubAuthApiRef,
-        }]}
+        },
+        {
+          id: 'atlassian-auth-provider',
+          title: 'Atlassian',
+          message: 'Sign in using Atlassian',
+          apiRef: atlassianAuthApiRef,
+        },
+        {
+          id: 'bitbucket-auth-provider',
+          title: 'BitBucket',
+          message: 'Sign in using BitBucket',
+          apiRef: bitbucketAuthApiRef,
+        }
+      ]}
       />
     ),
   },
